@@ -1,0 +1,23 @@
+
+Brainstorm for project ideas:
+* = Fenix's top 3 fav ideas
+
+
+mental health support app
+*  gratitude/goal/bucket list/other mental health benefitting lists, where you can get a prompt for each type of list 
+      and add to it??? or do one everyday? idk. basically, it could offer prompts and give users a place to write 
+      (and keep) their responses in an organized, concise, dedicated location
+game
+  platformer?
+  text-based game?
+*  cleaning ocean plastic/trash pollution game (like those games where you have a basket that you move and catch falling fruit, except
+      instead its a trash bag and you're catching trash that's polluting the ocean/beach)
+
+hobby-related app
+  story planner
+
+educational
+*  maybe a simple game that teaches its players some coding concept (or helps them study it) 
+      (doesn't need to be in an actual programming language, could just be a concept like logic gates, 
+      loops/loop types, how recursion works, conditional types, basic searching techniques, basic sorting techniques, 
+      maybe data types, etc.
