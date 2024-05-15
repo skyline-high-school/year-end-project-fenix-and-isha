@@ -6,7 +6,10 @@ MORE DETAILS FOR TRASH BASH (TRASH CLEANING GAME) IDEA:
 - use of TimerTask/Scheduling class
 - JavaFX graphics tree manipulation (that's kind of a given though)
 - game could get progressively harder (so the pollution objects fall increasingly faster, and more at a time, as time goes on / as the player gains more points), which could use TimerTask/Scheduling and/or recursion maybe? idk tbh
+- could also get harder with stuff you're not supposed to catch (like fish or shark)
 - use of recursion to handle the motion of the pollution objects? maybe? idk tbh
+
+
 
 
 xxxxxx
