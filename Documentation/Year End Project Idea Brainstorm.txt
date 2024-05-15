@@ -1,3 +1,16 @@
+MORE DETAILS FOR TRASH BASH (TRASH CLEANING GAME) IDEA:
+- JavaFX for the graphics (because visually it should be simple enough for that to be fine)
+- Classes (other than main and controller classes): pollution, trash (child), recycling (child), bin, trash bin (child), recycling bin (child), player (maybe?? it could be good if the game is two player or something, like to store color of trash bin and points collected by that player)
+- could potentially try to make it 2-player (one player on WASD keys, one player on arrow keys) where you compete to see who can catch the most trash in a certain limited amount of time
+- use of Random (for pollution objects spawning at random x-positions)
+- use of TimerTask/Scheduling class
+- JavaFX graphics tree manipulation (that's kind of a given though)
+- game could get progressively harder (so the pollution objects fall increasingly faster, and more at a time, as time goes on / as the player gains more points), which could use TimerTask/Scheduling and/or recursion maybe? idk tbh
+- use of recursion to handle the motion of the pollution objects? maybe? idk tbh
+
+
+xxxxxx
+
 
 Brainstorm for project ideas:
 * = Fenix's top 3 fav ideas
@@ -10,7 +23,7 @@ mental health support app
 game
   platformer?
   text-based game?
-*  cleaning ocean plastic/trash pollution game (like those games where you have a basket that you move and catch falling fruit, except
+***  cleaning ocean plastic/trash pollution game (like those games where you have a basket that you move and catch falling fruit, except
       instead its a trash bag and you're catching trash that's polluting the ocean/beach)
 
 hobby-related app
