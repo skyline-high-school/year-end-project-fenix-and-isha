@@ -21,5 +21,16 @@ public class Game {
         System.out.println("game start");
     }
 
+    public void moveLeft() {
+        System.out.println("Moving left");
+        moveX(blueBin, -5);
+    }
+    public void moveRight() {
+        System.out.println("Moving right");
+        moveX(blueBin, 5);
+    }
 
+    private void moveX(Rectangle bin, int x) {
+        bin.setX(bin.getX() + x);
+    }
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yearendproject.trashbash.Game">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="606.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yearendproject.trashbash.Game">
    <children>
       <ImageView fitHeight="409.0" fitWidth="606.0" pickOnBounds="true">
          <image>

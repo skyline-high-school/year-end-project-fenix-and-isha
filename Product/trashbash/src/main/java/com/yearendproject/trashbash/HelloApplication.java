@@ -19,14 +19,18 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Trash Bash");
 
+        Game game = fxmlLoader.getController();
+
         //used Bro Code's video on "JavaFX KeyEvent"
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
             @Override
             public void handle(KeyEvent keyEvent) {
                 System.out.println(keyEvent.getCode());
                 if (keyEvent.getCode() == KeyCode.A) {
-
+                    game.moveLeft();
+                }
+                if (keyEvent.getCode() == KeyCode.D) {
+                    game.moveRight();
                 }
             }
         });
