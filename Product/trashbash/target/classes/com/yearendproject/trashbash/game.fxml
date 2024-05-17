@@ -3,40 +3,16 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.shape.Rectangle?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yearendproject.trashbash.Game">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yearendproject.trashbash.Game">
    <children>
-      <ImageView fitHeight="411.0" fitWidth="606.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true">
+      <ImageView fitHeight="409.0" fitWidth="606.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../Pictures/wave%20background.jpg" />
+            <Image url="@../../../wave-background.jpg" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" layoutX="212.0" layoutY="335.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0">
-         <fill>
-            <LinearGradient endX="0.7476340934681216" endY="0.6277602643996759" startY="0.6214510800334557">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="1.0" green="1.0" blue="1.0" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </fill>
-      </Rectangle>
-      <Cylinder drawMode="LINE" height="75.0" layoutX="312.0" layoutY="372.0" radius="100.0" />
-      <Cylinder height="25.0" layoutX="162.0" layoutY="113.0" radius="10.0" />
-      <Cylinder height="25.0" layoutX="412.0" layoutY="113.0" radius="10.0" />
+      <Rectangle fx:id="blueBin" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="27.0" layoutX="91.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
+      <Rectangle fx:id="redBin" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="27.0" layoutX="322.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
    </children>
 </AnchorPane>

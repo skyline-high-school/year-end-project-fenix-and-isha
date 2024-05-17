@@ -3,13 +3,16 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yearendproject.trashbash.Game">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yearendproject.trashbash.Game">
    <children>
-      <ImageView fitHeight="409.0" fitWidth="606.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true">
+      <ImageView fitHeight="409.0" fitWidth="606.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../Pictures/better%20wave%20background%20cropped.jpg" />
+            <Image url="@../../../wave-background.jpg" />
          </image>
       </ImageView>
+      <Rectangle fx:id="blueBin" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="27.0" layoutX="91.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
+      <Rectangle fx:id="redBin" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="27.0" layoutX="322.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
    </children>
 </AnchorPane>
