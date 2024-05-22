@@ -25,13 +25,25 @@ public class HelloApplication extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                System.out.println(keyEvent.getCode());
+                //System.out.println(keyEvent.getCode());
+
                 if (keyEvent.getCode() == KeyCode.A) {
-                    game.moveLeft();
+
+                } else if (keyEvent.getCode() == KeyCode.D) {
+
                 }
-                if (keyEvent.getCode() == KeyCode.D) {
-                    game.moveRight();
+
+                /*
+                if (keyEvent.getCode() == KeyCode.LEFT) {
+                    game.moveRedLeft();
+                } else if (keyEvent.getCode() == KeyCode.RIGHT) {
+                    game.moveRedRight();
                 }
+
+                 */
+
+
+
             }
         });
 

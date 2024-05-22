@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="606.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yearendproject.trashbash.Game">
+<AnchorPane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yearendproject.trashbash.Game">
    <children>
       <ImageView fitHeight="409.0" fitWidth="606.0" pickOnBounds="true">
          <image>
             <Image url="@../../../wave-background.jpg" />
          </image>
       </ImageView>
-      <Rectangle fx:id="blueBin" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="27.0" layoutX="91.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
-      <Rectangle fx:id="redBin" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="27.0" layoutX="322.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
+      <Rectangle fx:id="blueBin" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="27.0" layoutX="14.0" layoutY="382.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
+      <Rectangle fx:id="redBin" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="27.0" layoutX="489.0" layoutY="382.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
    </children>
 </AnchorPane>
