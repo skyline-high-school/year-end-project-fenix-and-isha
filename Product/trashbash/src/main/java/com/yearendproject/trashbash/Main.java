@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
     public static Stage stg;
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("game.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("game.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Trash Bash");
 
@@ -28,20 +28,16 @@ public class HelloApplication extends Application {
                 //System.out.println(keyEvent.getCode());
 
                 if (keyEvent.getCode() == KeyCode.A) {
-
+                    game.moveBlueLeft();
                 } else if (keyEvent.getCode() == KeyCode.D) {
-
+                    game.moveBlueRight();
                 }
 
-                /*
                 if (keyEvent.getCode() == KeyCode.LEFT) {
                     game.moveRedLeft();
                 } else if (keyEvent.getCode() == KeyCode.RIGHT) {
                     game.moveRedRight();
                 }
-
-                 */
-
 
 
             }
