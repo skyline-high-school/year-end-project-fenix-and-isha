@@ -21,6 +21,7 @@ public class Main extends Application {
 
         Game game = fxmlLoader.getController();
 
+        //keyboard controls
         //used Bro Code's video on "JavaFX KeyEvent"
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -45,6 +46,7 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
+        Game.main(null); //added second main method to keep the game main method separate/abstracted and in its corresponding controller class
     }
 
     public static void main(String[] args) {

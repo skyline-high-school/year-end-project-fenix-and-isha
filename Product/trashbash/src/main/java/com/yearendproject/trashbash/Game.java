@@ -1,5 +1,6 @@
 package com.yearendproject.trashbash;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +21,7 @@ import javafx.stage.Stage;
 import javax.crypto.spec.PSource;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Game implements Initializable {
 
@@ -38,29 +38,75 @@ public class Game implements Initializable {
     public Bin trashBin;
     public Bin recycBin;
 
+    private int points;
+    //private Timer timer = new Timer();
+    private static int i;
+
+    //private static double paneWidth;
+
+    private ArrayList<Pollution> pollutionList = new ArrayList<>();
+
     public Game() {
         System.out.println("game start");
-
+        points = 0;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //adding the bins
+
         Image image = new Image("RECYCLIN BIN FINAL.png");
         ImageView iv = new ImageView(image);
-        iv.setPreserveRatio(true);
+        iv.setPreserveRatio(false);
         iv.setFitHeight(50);
+        iv.setFitWidth(80);
         pane.getChildren().add(iv);
         recycBin = new Bin(iv);
         recycBin.moveX(60);
 
         image = new Image("TRASH FINAL.png");
         iv = new ImageView(image);
-        iv.setPreserveRatio(true);
+        iv.setPreserveRatio(false);
         iv.setFitHeight(50);
+        iv.setFitWidth(80);
         pane.getChildren().add(iv);
         trashBin = new Bin(iv);
         trashBin.moveX(500);
+
+
+        //adding the pollution
+
+        addPollution();
+        addPollution();
+        addPollution();
+        addPollution();
+
+
+        /*
+        //falling objects animation
+
+        i = 0;
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (points > 3) {
+                        cancel();
+                        timer.cancel();
+                        System.out.println("You lost.");
+                    }
+                });
+                i += 1000; //incrementing timer
+                //TODO use the total time to display a high score
+
+                nextFallFrame();
+
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
+
+         */
     }
 
 
@@ -83,12 +129,56 @@ public class Game implements Initializable {
         moveX(trashBin, 8);
     }
 
-    private void moveX(Rectangle bin, int x) {
-        bin.setX(bin.getX() + x);
-    }
-
     private void moveX(Bin bin, int x) {
         bin.moveX(x);
     }
 
+    //GAME MAIN METHOD
+    public static void main(String[] args) {
+        System.out.println("MAIN GAME START!");
+
+    }
+
+    public void nextFallFrame() {
+
+    }
+
+    public void addPollution(String imageName) {
+        //spawns a specified type of pollution
+
+        final double paneWidth = pane.getChildren().get(0).getBoundsInLocal().getWidth();
+        Image image = new Image(imageName);
+        ImageView iv = new ImageView(image);
+        iv.setPreserveRatio(true);
+        iv.setFitWidth(30);
+        pane.getChildren().add(iv);
+        pollutionList.add(new Pollution(iv, "RECYC"));
+        Random random = new Random();
+        iv.setX(random.nextDouble(paneWidth - iv.getFitWidth())); //places pollution at random x position on stage
+    }
+
+    public void addPollution() {
+        //spawns a random type of pollution
+
+        final double paneWidth = pane.getChildren().get(0).getBoundsInLocal().getWidth();
+        String[] imageNamePool = {"WATER BOTTLE FINAL.png", "WATER BOTTLE FINAL.png", "SODA FINAL.png", "SODA FINAL.png", "STARFISH FINAL.png"};
+        Random rand = new Random();
+        String name = imageNamePool[rand.nextInt(imageNamePool.length)];
+        Image image = new Image(name);
+        ImageView iv = new ImageView(image);
+        iv.setPreserveRatio(true);
+        iv.setFitWidth(30);
+        pane.getChildren().add(iv);
+
+        String type;
+        if (name.equals("WATER BOTTLE FINAL.png")) {
+            type = "trash";
+        } else if (name.equals("SODA FINAL.png")) {
+            type = "recyc";
+        } else {
+            type = "not";
+        }
+        pollutionList.add(new Pollution(iv, type));
+        iv.setX(rand.nextDouble(paneWidth - iv.getFitWidth())); //places pollution at random x position on stage
+    }
 }
