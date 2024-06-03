@@ -15,4 +15,20 @@ public class Pollution {
         this.iv = iv;
         this.type = type;
     }
+
+    public ImageView getIv() {
+        return iv;
+    }
+
+    public void setIv(ImageView iv) {
+        this.iv = iv;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

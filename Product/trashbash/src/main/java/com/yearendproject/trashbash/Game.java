@@ -39,7 +39,7 @@ public class Game implements Initializable {
     public Bin recycBin;
 
     private int points;
-    //private Timer timer = new Timer();
+    private Timer timer = new Timer();
     private static int i;
 
     //private static double paneWidth;
@@ -83,7 +83,7 @@ public class Game implements Initializable {
         addPollution();
 
 
-        /*
+
         //falling objects animation
 
         i = 0;
@@ -97,16 +97,13 @@ public class Game implements Initializable {
                         System.out.println("You lost.");
                     }
                 });
-                i += 1000; //incrementing timer
+                i += 200; //incrementing timer
                 //TODO use the total time to display a high score
-
                 nextFallFrame();
 
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
-
-         */
+        timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
 
@@ -140,7 +137,15 @@ public class Game implements Initializable {
     }
 
     public void nextFallFrame() {
+        for (int j = 0; j < pollutionList.size(); j++) {
+            ImageView iv = pollutionList.get(j).getIv();
+            iv.setY(iv.getY() + 5);
 
+
+            if (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50) {
+                pollutionList.remove(j);
+            }
+        }
     }
 
     public void addPollution(String imageName) {
