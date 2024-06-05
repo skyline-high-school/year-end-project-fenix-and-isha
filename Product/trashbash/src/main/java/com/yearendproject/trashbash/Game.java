@@ -107,21 +107,21 @@ public class Game implements Initializable {
 
     public void moveBlueLeft() {
         //moveX(blueBin, -8);
-        moveX(recycBin, -8);
+        moveX(recycBin, -10);
     }
     public void moveBlueRight() {
         //moveX(blueBin, 8);
-        moveX(recycBin, 8);
+        moveX(recycBin, 10);
     }
 
     public void moveRedLeft() {
         //moveX(redBin, -8);
-        moveX(trashBin, -8);
+        moveX(trashBin, -10);
     }
 
     public void moveRedRight() {
         //moveX(redBin, 8);
-        moveX(trashBin, 8);
+        moveX(trashBin, 10);
     }
 
     private void moveX(Bin bin, int x) {
@@ -135,28 +135,32 @@ public class Game implements Initializable {
     }
 
     public void nextFallFrame() {
-
         for (int j = 0; j < pollutionList.size(); j++) {
             ImageView iv = pollutionList.get(j).getIv();
+
+            //moves every pollution object down
             iv.setY(iv.getY() + 5);
 
+            //handles what happens when objects reach the bins or the bottom of the screen
             if ((!pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 10)) {
                 System.out.println("You lose!");
                 System.exit(0);
             } else if (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 100) {
-
                 double px = pollutionList.get(j).getIv().getX();
                 double rbx = recycBin.getImage().getX();
                 double tbx = trashBin.getImage().getX();
-                if (Math.abs(px - rbx) < 80 && (pollutionList.get(j).getType().equals("recyc"))) {
+                if (Math.abs(px+15 - rbx-40) < 55 && (pollutionList.get(j).getType().equals("recyc"))) {
                     respawnPollution(pollutionList.get(j));
                     System.out.println("recyc caught");
-                } else if (Math.abs(px - tbx) < 80 && (pollutionList.get(j).getType().equals("trash"))) {
+                } else if (Math.abs(px+15 - tbx-40) < 55 && (pollutionList.get(j).getType().equals("trash"))) {
+                    //+15 and -40 to use the objects' centers as references
                     respawnPollution(pollutionList.get(j));
                     System.out.println("trash caught");
-                } else if (((Math.abs(px - rbx) < 80 || Math.abs(px - tbx) < 80) && pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
+                } else if (((Math.abs(px+15 - rbx-40) < 55 || Math.abs(px+15 - tbx-40) < 55) && pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
                     System.out.println("Woah, living sea creatures aren't trash! You lose.");
                     System.exit(0);
+                } else if (pollutionList.get(j).getType().equals("not") && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 30)) {
+                    respawnPollution(pollutionList.get(j));
                 }
             }
         }
@@ -227,7 +231,6 @@ public class Game implements Initializable {
 
         pol.getIv().setX(rand.nextDouble(paneWidth - pol.getIv().getFitWidth())); //places pollution at random x position on stage
         pol.getIv().setY(0);
-        //pol.setIv(iv);
         pol.setType(type);
     }
 }
