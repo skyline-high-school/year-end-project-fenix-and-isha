@@ -140,7 +140,7 @@ public class Game implements Initializable {
             ImageView iv = pollutionList.get(j).getIv();
             iv.setY(iv.getY() + 5);
 
-            if (!pollutionList.get(j).getType().equals("not") && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 10)) {
+            if ((!pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 10)) {
                 System.out.println("You lose!");
                 System.exit(0);
             } else if (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 100) {
@@ -150,9 +150,11 @@ public class Game implements Initializable {
                 double tbx = trashBin.getImage().getX();
                 if (Math.abs(px - rbx) < 80 && (pollutionList.get(j).getType().equals("recyc"))) {
                     respawnPollution(pollutionList.get(j));
+                    System.out.println("recyc caught");
                 } else if (Math.abs(px - tbx) < 80 && (pollutionList.get(j).getType().equals("trash"))) {
                     respawnPollution(pollutionList.get(j));
-                } else if ((Math.abs(px - rbx) < 80 || Math.abs(px - tbx) < 80) && pollutionList.get(j).getType().equals("not") && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
+                    System.out.println("trash caught");
+                } else if (((Math.abs(px - rbx) < 80 || Math.abs(px - tbx) < 80) && pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
                     System.out.println("Woah, living sea creatures aren't trash! You lose.");
                     System.exit(0);
                 }
@@ -161,7 +163,7 @@ public class Game implements Initializable {
 
     }
 
-    public void addPollution(String imageName) {
+    public void addPollution(String imageName, String type) {
         //spawns a new specified type of pollution
 
         final double paneWidth = pane.getChildren().get(0).getBoundsInLocal().getWidth();
@@ -170,7 +172,7 @@ public class Game implements Initializable {
         iv.setPreserveRatio(true);
         iv.setFitWidth(30);
         pane.getChildren().add(iv);
-        pollutionList.add(new Pollution(iv, "recyc"));
+        pollutionList.add(new Pollution(iv, type));
         Random random = new Random();
         iv.setX(random.nextDouble(paneWidth - iv.getFitWidth())); //places pollution at random x position on stage
     }
@@ -209,9 +211,10 @@ public class Game implements Initializable {
         Random rand = new Random();
         String name = imageNamePool[rand.nextInt(imageNamePool.length)];
         Image image = new Image(name);
-        ImageView iv = pol.getIv();
-        iv.setPreserveRatio(true);
-        iv.setFitWidth(30);
+        pol.getIv().setImage(image);
+        //ImageView iv = pol.getIv();
+        //iv.setPreserveRatio(true);
+        //iv.setFitWidth(30);
 
         String type;
         if (name.equals("CHIPS FINAL.png")) {
@@ -222,9 +225,9 @@ public class Game implements Initializable {
             type = "not";
         }
 
-        iv.setX(rand.nextDouble(paneWidth - iv.getFitWidth())); //places pollution at random x position on stage
-        iv.setY(0);
-        pol.setIv(iv);
+        pol.getIv().setX(rand.nextDouble(paneWidth - pol.getIv().getFitWidth())); //places pollution at random x position on stage
+        pol.getIv().setY(0);
+        //pol.setIv(iv);
         pol.setType(type);
     }
 }
