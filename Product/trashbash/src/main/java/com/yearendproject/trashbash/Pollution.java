@@ -31,4 +31,5 @@ public class Pollution {
     public void setType(String type) {
         this.type = type;
     }
+
 }
