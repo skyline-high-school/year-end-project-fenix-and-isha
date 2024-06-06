@@ -1,46 +1,52 @@
 package com.yearendproject.trashbash;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
-import javax.crypto.spec.PSource;
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class Game implements Initializable {
 
-    /*
-    @FXML
-    public Rectangle blueBin;
-    @FXML
-    public Rectangle redBin;
-
-     */
-    @FXML
-    public AnchorPane pane;
+    public boolean tLeft;
+    public boolean tRight;
+    public boolean rLeft;
+    public boolean rRight;
 
     public Bin trashBin;
     public Bin recycBin;
 
-    private int points;
+    @FXML
+    public AnchorPane pane;
+    @FXML
+    public VBox popupVbox;
+    @FXML
+    public Label popupLabel;
+    @FXML
+    public Text popupText;
+    @FXML
+    public Button playAgainButton;
+    @FXML
+    public Button quitButton;
+    @FXML
+    public Label scoreLabel;
+
+    private int trashPoints;
+    private int recycPoints;
     private Timer timer = new Timer();
-    private static int i;
+    private int elapsedTime = 0;
+
+    private boolean lost;
+    private boolean firstRound;
 
     //private static double paneWidth;
 
@@ -48,11 +54,16 @@ public class Game implements Initializable {
 
     public Game() {
         System.out.println("game start");
-        points = 0;
+        trashPoints = 0;
+        recycPoints = 0;
+        elapsedTime = 0;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        firstRound = true;
+        scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + elapsedTime);
+        //scoreLabel.setText("Trash: 0\nRecycling: 0\nElapsed time: 0");
 
         //adding the bins
 
@@ -74,6 +85,13 @@ public class Game implements Initializable {
         trashBin = new Bin(iv);
         trashBin.moveX(500);
 
+        //initial instruction popup
+        popupLabel.setText("How to play:");
+        popupText.setText("The beach is polluted with trash and recycling. Move the recycling bin with the 'a' and 'd' keys to catch the recycling (the soda cans), " +
+                "and move the trash bin with the left and right arrow keys to catch the trash (the chip bags). Be careful not to get a living animal (the sea stars) in either of the bins though!");
+        popupVbox.setVisible(true);
+
+        /*
 
         //adding the pollution
 
@@ -81,47 +99,70 @@ public class Game implements Initializable {
         addPollution();
 
 
-
         //falling objects animation
 
-        i = 0;
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    if (points > 3) {
-                        cancel();
+                    if (lost) {
                         timer.cancel();
-                        System.out.println("You lost.");
+                        cancel();
+                        //System.out.println("You lost.");
                     }
                 });
-                i += 80; //incrementing timer
-                //TODO use the total time to display a high score
+                elapsedTime += 80; //incrementing timer
                 nextFallFrame();
 
             }
         };
         timer.scheduleAtFixedRate(timerTask, 1000, 80);
+
+         */
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while(!lost) {
+                        if (rLeft) {
+                            moveBlueLeft();
+                        } else if (rRight) {
+                            moveBlueRight();
+                        }
+                        if (tLeft) {
+                            moveRedLeft();
+                        } else if(tRight) {
+                            moveRedRight();
+                        }
+                        Thread.sleep(20);
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        thread.start();
     }
 
-
+    private final int d = 10;
     public void moveBlueLeft() {
         //moveX(blueBin, -8);
-        moveX(recycBin, -10);
+        moveX(recycBin, -d);
     }
     public void moveBlueRight() {
         //moveX(blueBin, 8);
-        moveX(recycBin, 10);
+        moveX(recycBin, d);
     }
 
     public void moveRedLeft() {
         //moveX(redBin, -8);
-        moveX(trashBin, -10);
+        moveX(trashBin, -d);
     }
 
     public void moveRedRight() {
         //moveX(redBin, 8);
-        moveX(trashBin, 10);
+        moveX(trashBin, d);
     }
 
     private void moveX(Bin bin, int x) {
@@ -135,6 +176,7 @@ public class Game implements Initializable {
     }
 
     public void nextFallFrame() {
+
         for (int j = 0; j < pollutionList.size(); j++) {
             ImageView iv = pollutionList.get(j).getIv();
 
@@ -144,7 +186,7 @@ public class Game implements Initializable {
             //handles what happens when objects reach the bins or the bottom of the screen
             if ((!pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 10)) {
                 System.out.println("You lose!");
-                System.exit(0);
+                lost = true;
             } else if (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 100) {
                 double px = pollutionList.get(j).getIv().getX();
                 double rbx = recycBin.getImage().getX();
@@ -152,19 +194,20 @@ public class Game implements Initializable {
                 if (Math.abs(px+15 - rbx-40) < 55 && (pollutionList.get(j).getType().equals("recyc"))) {
                     respawnPollution(pollutionList.get(j));
                     System.out.println("recyc caught");
+                    updateScore();
                 } else if (Math.abs(px+15 - tbx-40) < 55 && (pollutionList.get(j).getType().equals("trash"))) {
                     //+15 and -40 to use the objects' centers as references
                     respawnPollution(pollutionList.get(j));
                     System.out.println("trash caught");
+                    updateScore();
                 } else if (((Math.abs(px+15 - rbx-40) < 55 || Math.abs(px+15 - tbx-40) < 55) && pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
                     System.out.println("Woah, living sea creatures aren't trash! You lose.");
-                    System.exit(0);
+                    lost = true;
                 } else if (pollutionList.get(j).getType().equals("not") && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 30)) {
                     respawnPollution(pollutionList.get(j));
                 }
             }
         }
-
     }
 
     public void addPollution(String imageName, String type) {
@@ -232,5 +275,60 @@ public class Game implements Initializable {
         pol.getIv().setX(rand.nextDouble(paneWidth - pol.getIv().getFitWidth())); //places pollution at random x position on stage
         pol.getIv().setY(0);
         pol.setType(type);
+    }
+
+    public void updateScore() {
+        scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + elapsedTime);
+    }
+
+    public void onQuitButtonPressed(ActionEvent actionEvent) {
+        System.exit(0);
+    }
+
+    public void onPlayButtonPressed(ActionEvent actionEvent) {
+        if (firstRound) {
+            firstRound = false;
+            //adding the pollution
+
+            addPollution();
+            addPollution();
+        } else {
+            //reset scores
+            trashPoints = 0;
+            recycPoints = 0;
+            elapsedTime = 0;
+            scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + elapsedTime);
+            //scoreLabel.setText("Trash: 0\nRecycling: 0\nElapsed time: 0");
+
+            //move the bins back to their original positions
+            recycBin.moveX(60);
+            trashBin.moveX(500);
+
+
+            //Respawning all pollution objects
+            for (int i = 0; i < pollutionList.size(); i++) {
+                respawnPollution(pollutionList.get(i));
+            }
+
+        }
+
+        popupVbox.setVisible(false);
+
+        //falling objects animation
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (lost) {
+                        timer.cancel();
+                        cancel();
+                        //System.out.println("You lost.");
+                    }
+                    elapsedTime += 80; //incrementing timer
+                    nextFallFrame();
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 80);
     }
 }

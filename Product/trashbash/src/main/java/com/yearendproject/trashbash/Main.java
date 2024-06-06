@@ -21,6 +21,8 @@ public class Main extends Application {
 
         Game game = fxmlLoader.getController();
 
+        /*
+
         //keyboard controls
         //used Bro Code's video on "JavaFX KeyEvent"
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -40,7 +42,49 @@ public class Main extends Application {
                     game.moveRedRight();
                 }
 
+                if (keyEvent.getCode() == KeyCode.LEFT && keyEvent.getCode() == KeyCode.A) {
+                    game.moveBlueLeft();
+                    game.moveRedLeft();
+                }
 
+            }
+        });
+
+         */
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.A) {
+                    game.rLeft = true;
+                }
+                if (keyEvent.getCode() == KeyCode.D) {
+                    game.rRight = true;
+                }
+                if (keyEvent.getCode() == KeyCode.LEFT) {
+                    game.tLeft = true;
+                }
+                if (keyEvent.getCode() == KeyCode.RIGHT) {
+                    game.tRight = true;
+                }
+            }
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.A) {
+                    game.rLeft = false;
+                }
+                if (keyEvent.getCode() == KeyCode.D) {
+                    game.rRight = false;
+                }
+                if (keyEvent.getCode() == KeyCode.LEFT) {
+                    game.tLeft = false;
+                }
+                if (keyEvent.getCode() == KeyCode.RIGHT) {
+                    game.tRight = false;
+                }
             }
         });
 
@@ -48,6 +92,8 @@ public class Main extends Application {
         stage.show();
         Game.main(null); //added second main method to keep the game main method separate/abstracted and in its corresponding controller class
     }
+
+
 
     public static void main(String[] args) {
         launch();
