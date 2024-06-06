@@ -43,7 +43,7 @@ public class Game implements Initializable {
     private int trashPoints;
     private int recycPoints;
     private Timer timer = new Timer();
-    private int elapsedTime = 0;
+    private double elapsedTime = 0.0;
 
     private boolean lost;
     private boolean firstRound;
@@ -62,7 +62,7 @@ public class Game implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         firstRound = true;
-        scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + elapsedTime);
+        scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + (int)elapsedTime);
         //scoreLabel.setText("Trash: 0\nRecycling: 0\nElapsed time: 0");
 
         //adding the bins
@@ -145,7 +145,7 @@ public class Game implements Initializable {
         thread.start();
     }
 
-    private final int d = 10;
+    private final int d = 7;
     public void moveBlueLeft() {
         //moveX(blueBin, -8);
         moveX(recycBin, -d);
@@ -176,7 +176,7 @@ public class Game implements Initializable {
     }
 
     public void nextFallFrame() {
-
+        updateScore();
         for (int j = 0; j < pollutionList.size(); j++) {
             ImageView iv = pollutionList.get(j).getIv();
 
@@ -194,12 +194,12 @@ public class Game implements Initializable {
                 if (Math.abs(px+15 - rbx-40) < 55 && (pollutionList.get(j).getType().equals("recyc"))) {
                     respawnPollution(pollutionList.get(j));
                     System.out.println("recyc caught");
-                    updateScore();
+                    recycPoints++;
                 } else if (Math.abs(px+15 - tbx-40) < 55 && (pollutionList.get(j).getType().equals("trash"))) {
                     //+15 and -40 to use the objects' centers as references
                     respawnPollution(pollutionList.get(j));
                     System.out.println("trash caught");
-                    updateScore();
+                    trashPoints++;
                 } else if (((Math.abs(px+15 - rbx-40) < 55 || Math.abs(px+15 - tbx-40) < 55) && pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
                     System.out.println("Woah, living sea creatures aren't trash! You lose.");
                     lost = true;
@@ -278,7 +278,7 @@ public class Game implements Initializable {
     }
 
     public void updateScore() {
-        scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + elapsedTime);
+        scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + (int)elapsedTime);
     }
 
     public void onQuitButtonPressed(ActionEvent actionEvent) {
@@ -297,7 +297,7 @@ public class Game implements Initializable {
             trashPoints = 0;
             recycPoints = 0;
             elapsedTime = 0;
-            scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + elapsedTime);
+            scoreLabel.setText("Trash: " + trashPoints + "\nRecycling: " + recycPoints + "\nElapsed time: " + (int)elapsedTime);
             //scoreLabel.setText("Trash: 0\nRecycling: 0\nElapsed time: 0");
 
             //move the bins back to their original positions
@@ -324,7 +324,7 @@ public class Game implements Initializable {
                         cancel();
                         //System.out.println("You lost.");
                     }
-                    elapsedTime += 80; //incrementing timer
+                    elapsedTime += 0.080; //incrementing timer
                     nextFallFrame();
                 });
             }
