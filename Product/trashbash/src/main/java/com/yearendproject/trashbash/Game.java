@@ -25,6 +25,8 @@ public class Game implements Initializable {
     public Bin trashBin;
     public Bin recycBin;
 
+    private TimerTask timerTask;
+
     @FXML
     public AnchorPane pane;
     @FXML
@@ -42,7 +44,7 @@ public class Game implements Initializable {
 
     private int trashPoints;
     private int recycPoints;
-    private Timer timer = new Timer();
+    //private Timer timer = new Timer();
     private double elapsedTime = 0.0;
 
     private boolean lost;
@@ -124,7 +126,7 @@ public class Game implements Initializable {
             @Override
             public void run() {
                 try {
-                    while(!lost) {
+                    while (true) {
                         if (rLeft) {
                             moveBlueLeft();
                         } else if (rRight) {
@@ -132,7 +134,7 @@ public class Game implements Initializable {
                         }
                         if (tLeft) {
                             moveRedLeft();
-                        } else if(tRight) {
+                        } else if (tRight) {
                             moveRedRight();
                         }
                         Thread.sleep(20);
@@ -187,6 +189,7 @@ public class Game implements Initializable {
             if ((!pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 10)) {
                 System.out.println("You lose!");
                 lost = true;
+                lostMessage();
             } else if (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 100) {
                 double px = pollutionList.get(j).getIv().getX();
                 double rbx = recycBin.getImage().getX();
@@ -203,6 +206,7 @@ public class Game implements Initializable {
                 } else if (((Math.abs(px+15 - rbx-40) < 55 || Math.abs(px+15 - tbx-40) < 55) && pollutionList.get(j).getType().equals("not")) && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 50)) {
                     System.out.println("Woah, living sea creatures aren't trash! You lose.");
                     lost = true;
+                    lostMessage();
                 } else if (pollutionList.get(j).getType().equals("not") && (iv.getY() > pane.getChildren().get(0).getBoundsInLocal().getHeight() - 30)) {
                     respawnPollution(pollutionList.get(j));
                 }
@@ -286,6 +290,7 @@ public class Game implements Initializable {
     }
 
     public void onPlayButtonPressed(ActionEvent actionEvent) {
+        lost = false;
         if (firstRound) {
             firstRound = false;
             //adding the pollution
@@ -301,8 +306,8 @@ public class Game implements Initializable {
             //scoreLabel.setText("Trash: 0\nRecycling: 0\nElapsed time: 0");
 
             //move the bins back to their original positions
-            recycBin.moveX(60);
-            trashBin.moveX(500);
+            recycBin.getImage().setX(60);
+            trashBin.getImage().setX(500);
 
 
             //Respawning all pollution objects
@@ -314,6 +319,8 @@ public class Game implements Initializable {
 
         popupVbox.setVisible(false);
 
+        Timer timer = new Timer();
+
         //falling objects animation
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -322,7 +329,6 @@ public class Game implements Initializable {
                     if (lost) {
                         timer.cancel();
                         cancel();
-                        //System.out.println("You lost.");
                     }
                     elapsedTime += 0.080; //incrementing timer
                     nextFallFrame();
@@ -330,5 +336,12 @@ public class Game implements Initializable {
             }
         };
         timer.scheduleAtFixedRate(timerTask, 1000, 80);
+    }
+
+    public void lostMessage() {
+        popupLabel.setText("You lost!");
+        popupText.setText("Looks like you made a mistake in your beach pollution sorting. Try again and see if you can go for longer! " +
+                "Remember to be careful to catch trash (chip bags) in the trash bin and recycling (soda cans) in the recycling bin, and to not let any living creatures (sea stars) into either bin. Good luck!");
+        popupVbox.setVisible(true);
     }
 }
